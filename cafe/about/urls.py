@@ -8,7 +8,10 @@ urlpatterns = [
     path('all/dish/<int:id>/', dish, name='menu_dish'),
     path('provider/', all_provider, name='all_provider_list'),
     path('provider/<int:id>/', provider, name='provider_menu'),
-    path('provider/addprover/', add_provider, name="add_new_provider")
+    path('provider/addprover/', add_provider, name="add_new_provider"),
+    path('reg/', user_registraion, name='registr'),
+    path('login/', user_login, name='log in'),
+    path('logout/', user_logout, name='log out'),
 ]
 
 if settings.DEBUG:

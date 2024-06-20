@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django import forms
-from .models import Provider
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.models import User
 import re
 
 
@@ -24,3 +25,46 @@ class ProviderForm(forms.Form):
         if re.match(r'\+7\(\d{3}\)\d{3}-\d{2}-\d{2}', phone):
             return phone
         return False
+    
+
+class UserRegistration(UserCreationForm):
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'email',
+            'password1',
+            'password2',
+        )
+        username = forms.CharField(
+            label='Имя',
+            widget=forms.TextInput(attrs={'class': 'form-control'})
+        )
+        
+        email = forms.EmailField(
+            label='Email',
+            widget=forms.EmailInput(attrs={'class': 'form-control'})
+        )
+        
+        password1 = forms.CharField(
+            label='Пароль',
+            widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        )
+        
+        password2 = forms.CharField(
+            label='Повторите пароль',
+            widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        )
+        
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(
+        label='Введите логин',
+        widget=forms.TextInput({'class': 'form-control'}),
+        min_length=2
+    )
+    
+    password = forms.CharField(
+        label='Введите пароль',
+        widget=forms.PasswordInput({'class': 'form-control'}),
+    )
